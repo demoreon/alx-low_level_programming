@@ -3,9 +3,8 @@
 /**
  * _putchar - output a single character
  * Return: void
- * On error, -1 is returned, and errno is set appropriately.
  */
-void _putchar(char c)
+void _putchar(char x)
 {
-	write(1, &c, 1);
+	write(1, &x, 1);
 }
