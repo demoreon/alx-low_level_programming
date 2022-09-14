@@ -1,5 +1,4 @@
 #include <unistd.h>
-
 /**
  * _putchar - output a single character
  * Return: void
