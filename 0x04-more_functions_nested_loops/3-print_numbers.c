@@ -1,9 +1,7 @@
 #include "main.h"
 /**
- * mul - checks for digit
- * @a: Int a
- * @b: Int b
- * Return: 1 if true or 0 for false
+ * print_numbers - checks for digit
+ * Return: 0 Success
  */
 
 void print_numbers(void)
