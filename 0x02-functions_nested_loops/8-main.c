@@ -1,4 +1,6 @@
+#include <stdio.h>
 #include "main.h"
+
 /**
  * main - test magna
 
@@ -6,6 +8,6 @@
  */
 int main(void)
 {
-	print_alphabet_x10();
+        jack_bauer();
 	return (0);
 }
