@@ -1,22 +1,20 @@
 #include "main.h"
-
 /**
- * print_triangle - prints a triangle.
- * @size: numbers of lines.
- * Return: no return.
+ * print_triangle - prints a triangle
+ * @size: takes in a integer for size of triangle
  */
 void print_triangle(int size)
 {
-	int i, j;
+	int row, column, k;
 
-	for (i = 0; i < size; i++)
+	if (size <= 0)
+		_putchar('\n');
+	for (row = 0; row < size; row++)
 	{
-		for (j = 1; j < (size - i); j++)
+		for (column = size - row; column > 1; column--)
 			_putchar(' ');
-		for (j--; j < size; j++)
-			_putchar(35);
-		if (i < (size - 1))
-			_putchar('\n');
+		for (k = row + column; k >= 1; k--)
+			_putchar('#');
+		_putchar('\n');
 	}
-	_putchar('\n');
 }
