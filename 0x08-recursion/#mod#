@@ -1,0 +1,5 @@
+#! /bin/bash
+mv holberton.h main.h
+sed -i 's/holberton/main/g' *
+sed -i 's/Holberton/ALX/g' *
+sed -i 's/MAIN/MAIN/g' *
