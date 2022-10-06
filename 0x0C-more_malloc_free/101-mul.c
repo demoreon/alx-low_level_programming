@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include "main.h"
 /**
- * _prt - print string followed by newline
+ * _prt - prindt string followed by newline
  * @s: string to print
  */
 void _prt(char *s)
