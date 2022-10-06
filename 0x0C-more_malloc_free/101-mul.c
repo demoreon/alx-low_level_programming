@@ -1,301 +1,197 @@
 #include <stdlib.h>
 #include "main.h"
-
 /**
- * print_str - Print a given string
- * @str: String to print
+ * _prt - print string followed by newline
+ * @s: string to print
  */
-void print_str(char *str)
+void _prt(char *s)
+{
+	while (*s != '\0')
+		_putchar(*s++);
+	_putchar('\n');
+}
+/**
+ * _realloc - Re-allocate memory for a larger or smaller size
+ * @ptr: Pointer to the old memory block
+ * @old_size: The old size of the memory block
+ * @new_size: The new size of the memory block being created
+ *
+ * Return: Pointer to new memory
+ */
+void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
+{
+	void *space;
+	char *spacecpy, *ptrcpy;
+	unsigned int i;
+
+	if (new_size == 0 && ptr != NULL)
+	{
+		free(ptr);
+		return (NULL);
+	}
+	if (new_size == old_size)
+		return (ptr);
+	/* regardless, we need to make new space of new_size */
+	space = malloc(new_size);
+	if (space == NULL)
+		return (NULL);
+	/* if ptr is null, return space without copying */
+	if (ptr == NULL)
+		return (space);
+	/* copy old contents into new space */
+	spacecpy = space;
+	ptrcpy = ptr;
+	for (i = 0; i < old_size && i < new_size; i++)
+		spacecpy[i] = ptrcpy[i];
+	free(ptr);
+	return (space);
+}
+/**
+ * _calloc - Allocate memory and initalize space to zero
+ * @nmemb: number of elements
+ * @size: size of bytes
+ *
+ * Return: pointer to memory space, or NULL
+ */
+void *_calloc(unsigned int nmemb, unsigned int size)
+{
+	void *space;
+	char *memset;
+	unsigned int i;
+
+	if (nmemb == 0 || size == 0)
+		return (NULL);
+	space = malloc(nmemb * size);
+	if (space == NULL)
+		return (NULL);
+
+	memset = space;
+	for (i = 0 ; i < nmemb * size; i++)
+	{
+		*(memset + i) = 0;
+	}
+
+	return (space);
+}
+/**
+ * _notdigit - check to see if string is only digits
+ * @s: string to check
+ *
+ * Return: 0 if only digits, 1 if non digit chars
+ */
+int _notdigit(char *s)
+{
+	for ( ; *s; s++)
+		if (*s < '0' || *s > '9')
+			return (1);
+	return (0);
+}
+/**
+ * rev_ - Reverse a string in place
+ * @s: string to reverse
+ */
+void rev_(char *s)
+{
+	char tmp;
+	int i, j;
+
+	for (i = 0; s[i]; i++)
+		;
+	i--;
+	for (j = 0; j <= i / 2; j++)
+	{
+		tmp = s[j];
+		s[j] = s[i - j];
+		s[i - j] = tmp;
+	}
+}
+/**
+ * _addup - add up integer array
+ * @arr: array to count
+ * @n: number of ints to count
+ * @place: which tens place to count
+ *
+ * Return: result of addition
+ */
+int _addup(int *arr, int n, int place)
+{
+	int sum, i;
+
+	for (i = 0, sum = 0; i < n; i++)
+	{
+		sum += arr[n * i + place];
+	}
+	return (sum);
+}
+/**
+ * cut_zeros - cut off my zeros
+ * @s: string to cut
+ *
+ * Return: length of s
+ */
+int cut_zeros(char *s)
 {
 	int i;
 
 	i = 0;
-	while (str[i] != '\0')
+	while (*s != '\0')
 	{
-		_putchar(str[i]);
 		i++;
+		s++;
 	}
-	_putchar('\n');
-}
-
-
-/**
- * print_err - Print the word "Error"
- */
-void print_err(void)
-{
-	_putchar('E');
-	_putchar('r');
-	_putchar('r');
-	_putchar('o');
-	_putchar('r');
-	_putchar('\n');
-	exit(98);
-}
-
-/**
- * rev_string - Reverse the given string
- * @s: The string to reverse
- * @size: Size of string to revers;
- * Return: Nothing
- */
-void rev_string(char *s, int size)
-{
-	char *str;
-	int i, r;
-
-	str = malloc(size);
-	if (str == NULL)
-		print_err();
-	i = 0;
-	while (*(s + i) != 0)
+	i--;
+	s--;
+	while (*s == '0' && i > 0)
 	{
-		str[i] = *(s + i);
-		i++;
-	}
-	r = i - 1;
-	i = 0;
-	while (r > 0)
-	{
-		*(s + r) = str[i];
-		r--;
-		i++;
-	}
-	*(s + r) = str[i];
-	free(str);
-}
-
-/**
- * str_len - Find the length of a given string
- * @str: String to find the length of
- *
- * Return: Length of the string
- */
-unsigned int str_len(char *str)
-{
-	unsigned int i;
-
-	i = 0;
-	while (str[i] != '\0')
-	{
-		i++;
+		*s = '\0';
+		s--;
+		i--;
 	}
 	return (i);
 }
 
 /**
- * init - Initialize an array with 0
- * @arr: The array to initialize
- * @size: Size of the array
+ * main - multiple two numbers and print the result
+ * @argc: Number of arguments
+ * @argv: Argument strings
  *
- * Return: Pointer to array
- */
-char *init(char *arr, int size)
-{
-	int i;
-
-	i = 0;
-	while (i < size)
-	{
-		arr[i] = '0';
-		i++;
-	}
-	return (arr);
-}
-
-/**
- * _isstrdigit - Check if input is only numbers
- * @str: Given input to check
- *
- * Return: 1 if a number, 0 if otherwise
- */
-int _isstrdigit(char *str)
-{
-	int i;
-
-	i = 0;
-	while (str[i] != '\0')
-	{
-		if (str[i] < '0' || str[i] > '9')
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-/**
- * mul - Multiply two strings together
- * @num1: The first number, as a string
- * @num2: The second number, as a string
- * @len1: The length of the first string
- * @len2: The length of the second string
- *
- * Return: Pointer to char array
- */
-char *mul(char *num1, char *num2, int len1, int len2)
-{
-	int i, prod, j, carry, k, digit, reslen;
-	char *res;
-
-	reslen = len1 + len2 + 1;
-	res = malloc(reslen * sizeof(char));
-	if (res == NULL)
-		print_err();
-	res = init(res, reslen);
-	i = len2 - 1; carry = k = digit = 0;
-	while (i >= 0 && k < (len1 + len2))
-	{
-		j = len1 - 1;
-		k = digit;
-		while (j >= 0)
-		{
-			carry = 0;
-			prod = (num1[j] - '0') * (num2[i] - '0');
-			if (prod > 9)
-				carry += prod / 10;
-			prod = prod % 10;
-			if (((res[k] - '0') + prod) > 9)
-			{
-				carry += 1;
-				res[k] += (prod - 10);
-			}
-			else
-				res[k] += prod;
-			res[k + 1] += carry;
-			k++; j--;
-		}
-		i--; digit++;
-	}
-	if (res[k] == '0')
-		res[k] = '\0';
-	else
-		res[k + 1] = '\0';
-	return (res);
-}
-
-/**
- * remove_zeroes - Remove zeroes from num
- * @str: String to remove zeroes from
- * @len: Length of string
- *
- * Return: Pointer to new string
- */
-char *remove_zeroes(char *str, int len)
-{
-	int i, j;
-	char *nstr;
-
-	i = 0;
-	while (str[i] == '0' && str[i] != '\0')
-	{
-		i++;
-	}
-	if (len - i == 0)
-	{
-		nstr = malloc(2 * sizeof(*nstr));
-		nstr[0] = '0';
-		nstr[1] = '\0';
-		return (nstr);
-	}
-	else
-		len -= i;
-	nstr = malloc(len * sizeof(*nstr) + 1);
-	j = 0;
-	while (j < len)
-	{
-		nstr[j] = str[i];
-		j++;
-		i++;
-	}
-	nstr[j] = '\0';
-	return (nstr);
-}
-
-/**
- * check_zero - Check to see if the number is zero or if zeroes need to be gone
- * @str: Str to check for zeroes
- * @len: len of string
- *
- * Return: Pointer to new num string
- */
-char *check_zero(char *str, int len)
-{
-	char *num;
-	int i;
-
-	if (str[0] == '0' && len != 1)
-		num = remove_zeroes(str, len);
-	else if (str[0] == '0' && len == 1)
-	{
-		num = malloc(len + 1);
-		if (num == NULL)
-			print_err();
-		num[0] = '0';
-		num[1] = '\0';
-	}
-	else
-	{
-		num = malloc(len + 1);
-		if (num == NULL)
-			print_err();
-		i = 0;
-		while (i < len)
-		{
-			num[i] = str[i];
-			i++;
-		}
-		num[i] = '\0';
-	}
-	return (num);
-}
-
-/**
- * main - Run all necessary functions to multply two strings as numbers
- * @argc: Number of args
- * @argv: Value of args
- *
- * Return: 0 on success
+ * Return: 0
  */
 int main(int argc, char *argv[])
 {
-	int len1, len2, anslen;
-	char *ans, *num1, *num2;
+	int *calc;
+	char *final;
+	unsigned int l1, l2, lsum, i, j, ntmp, rolltmp;
 
 	if (argc != 3)
+		_prt("Error"), exit(98);
+	if (_notdigit(argv[1]) || _notdigit(argv[2]))
+		_prt("Error"), exit(98);
+	for (l1 = 0; argv[1][l1]; l1++)
+		;
+	for (l2 = 0; argv[2][l2]; l2++)
+		;
+	lsum = l1 + l2, final = malloc((lsum + 2) * sizeof(*final));
+	calc = _calloc(lsum * lsum, sizeof(int));
+	if (calc == NULL)
+		_prt("Error"), exit(98);
+	rev_(argv[1]), rev_(argv[2]);
+	for (i = 0; i < l1; i++)
 	{
-		print_err();
-		exit(98);
+		rolltmp = 0, ntmp = 0;
+		for (j = 0; j < l2; j++)
+		{
+			ntmp = (argv[1][i] - '0') * (argv[2][j] - '0') + rolltmp;
+			calc[i * lsum + j + i] = ntmp % 10, rolltmp = ntmp / 10;
+		}
+		for (; j < l2 + i; j++, rolltmp /= 10)
+			calc[i * lsum + j + i] = rolltmp % 10;
+		while (rolltmp)
+			calc[i * lsum + j + i] = rolltmp % 10, rolltmp /= 10, j++;
 	}
-	if (_isstrdigit(argv[1]) == 0 || _isstrdigit(argv[2]) == 0)
-	{
-		print_err();
-		exit(98);
-	}
-	len1 = str_len(argv[1]);
-	len2 = str_len(argv[2]);
-	num1 = check_zero(argv[1], len1);
-	if (*num1 == '0')
-	{
-		_putchar('0');
-		_putchar('\n');
-		return (0);
-	}
-	num2 = check_zero(argv[2], len2);
-	if (*num2 == '0')
-	{
-		_putchar('0');
-		_putchar('\n');
-		return (0);
-	}
-	len1 = str_len(num1);
-	len2 = str_len(num2);
-	if (len1 > len2)
-		ans = mul(num1, num2, len1, len2);
-	else
-		ans = mul(num2, num1, len2, len1);
-	anslen = str_len(ans);
-	rev_string(ans, anslen);
-	print_str(ans);
-	free(ans); free(num1); free(num2);
+	for (i = 0, rolltmp = 0; i < lsum; i++, rolltmp /= 10)
+		rolltmp += _addup(calc, lsum, i), final[i] = rolltmp % 10 + '0';
+	final[i + 1] = '\0', i = cut_zeros(final), rev_(final);
+	final[i + 2] = '\0', _prt(final), free(calc), free(final);
 	return (0);
 }
