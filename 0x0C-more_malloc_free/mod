@@ -1,0 +1,4 @@
+#! /bin/bash
+mv main.h main.h
+sed -i 's/main/main/g' *
+sed -i 's/ALX/ALX/g' *
