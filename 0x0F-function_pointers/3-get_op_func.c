@@ -21,7 +21,7 @@ int (*get_op_func(char *s))(int, int)
 
 	while (i < 10)
 	{
-		if (s[0] == ops->op[i])
+		if (strcmp(s, ops[i].op) == 0)
 			break;
 		i++;
 	}
