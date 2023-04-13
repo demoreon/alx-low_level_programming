@@ -2,50 +2,48 @@
 #include <math.h>
 
 /**
- * jump_list - searches for a value using the Jump search algorithm
+ * jump_list - searches array
  *
- * @list: input list
- * @size: size
- * @value: value to search
- * Return: ix of the number
+ * @list: inputs to search
+ * @size: size of the array
+ * @value: value to search within the array
+ * Return: index of result
  */
 listint_t *jump_list(listint_t *list, size_t size, int value)
 {
-	size_t ix, j, n;
-	listint_t *pv;
+	size_t index, l, j;
+	listint_t *p;
 
 	if (list == NULL || size == 0)
 		return (NULL);
 
-	n = (size_t)sqrt((double)size);
-	ix = 0;
-	j = 0;
+	j = (size_t)sqrt((double)size);
+	index = 0;
+	l = 0;
 
 	do {
-		pv = list;
-		j++;
-		ix = j * n;
-		while (list->next && list->index < ix)
+		p = list;
+		l++;
+		index = l * j;
+
+		while (list->next && list->index < index)
 			list = list->next;
 
-		if (list->next == NULL && ix != list->index)
-			ix = list->index;
+		if (list->next == NULL && index != list->index)
+			index = list->index;
 
-		printf("Value checked at index [%d] = [%d]\n", (int)ix, list->n);
+		printf("Value checked at index [%d] = [%d]\n", (int)index, list->n);
 
-	} while (ix < size && list->next && list->n < value);
+	} while (index < size && list->next && list->n < value);
 
 	printf("Value found between indexes ");
-	printf("[%d] and [%d]\n", (int)pv->ix, (int)list->ix);
+	printf("[%d] and [%d]\n", (int)p->index, (int)list->index);
 
-	for (; pv && pv->index <= list->index; pv = pv->next)
+	for (; p && p->index <= list->index; p = p->next)
 	{
-		int k;
-
-		k = (int)pv->index;
-		printf("Value checked at index [%d] = [%d]\n", k, pv->n);
-		if (pv->n == value)
-			return (pv);
+		printf("Value checked at index [%d] = [%d]\n", (int)p->index, p->n);
+		if (p->n == value)
+			return (p);
 	}
 
 	return (NULL);
