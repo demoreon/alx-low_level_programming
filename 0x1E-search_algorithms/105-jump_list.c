@@ -1,0 +1,50 @@
+#include "search_algos.h"
+#include <math.h>
+
+/**
+ * jump_list - searches for a value using the Jump search algorithm
+ *
+ * @list: input list
+ * @size: size
+ * @value: value to search
+ * Return: ix of the number
+ */
+listint_t *jump_list(listint_t *list, size_t size, int value)
+{
+	size_t ix, j, n;
+	listint_t *pv;
+
+	if (list == NULL || size == 0)
+		return (NULL);
+
+	n = (size_t)sqrt((double)size);
+	ix = 0;
+	j = 0;
+
+	do {
+		pv = list;
+		j++;
+		ix = j * n;
+
+		while (list->next && list->ix < ix)
+			list = list->next;
+
+		if (list->next == NULL && ix != list->ix)
+			ix = list->ix;
+
+		printf("Value checked at ix [%d] = [%d]\n", (int)ix, list->n);
+
+	} while (ix < size && list->next && list->n < value);
+
+	printf("Value found between indexes ");
+	printf("[%d] and [%d]\n", (int)pv->ix, (int)list->ix);
+
+	for (; pv && pv->ix <= list->ix; pv = pv->next)
+	{
+		printf("Value checked at ix [%d] = [%d]\n", (int)pv->ix, pv->n);
+		if (pv->n == value)
+			return (pv);
+	}
+
+	return (NULL);
+}
