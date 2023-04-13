@@ -5,7 +5,7 @@
 #include <stdio.h>
 
 /**
- * struct list_search - singly linked list struct
+ * struct listint_s - singly linked list struct
  *
  * @n: Integer
  * @index: Index of the first node
@@ -18,7 +18,7 @@ typedef struct listint_s
 {
 	int n;
 	size_t index;
-	struct list_search *next;
+	struct listint_s *next;
 } listint_t;
 
 /**
